@@ -9,21 +9,24 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate(); // ✅ initialize useNavigate
 
+  
   const handleLogin = async (e) => {
-    e.preventDefault(); // ✅ prevent page refresh when submit
+    e.preventDefault();
     try {
-      const userData = await login(email, password); // ✅ call your login API
+      const userData = await login(email, password);
       console.log("User logged in:", userData);
-
-      localStorage.setItem("token", userData.token); // ✅ save token
-      console.log("Token saved to local storage", userData.accessToken); // 👈 fix here
-
-      navigate("/dashboard"); // ✅ redirect after successful login
+  
+      // ✅ Store the correct token
+      localStorage.setItem("token", userData.accessToken);
+      console.log("Token saved to local storage", userData.accessToken);
+  
+      navigate("/dashboard"); // ✅ redirect after saving the token
     } catch (err) {
       console.error("Login failed:", err);
       setError(err.message || "Something went wrong");
     }
   };
+  
 
   return (
     <div>

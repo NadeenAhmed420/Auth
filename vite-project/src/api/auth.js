@@ -21,13 +21,18 @@ export const login = async (email, password) => {
 };
 
 // Signup API
-export const signup = async (name, email, password) => {
+export const signup = async (username, email, password) => {
   try {
     const response = await axiosInstance.post("/user/signup", {
-      name,
+      username,
       email,
       password,
     });
+    const token = response.data.accessToken;
+    if (token) {
+      localStorage.setItem("token", token);
+      console.log("✅ Token saved to localStorage:", token);
+    }
     return response.data;
   } catch (error) {
     throw error.response.data;
